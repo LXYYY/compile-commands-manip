@@ -1,13 +1,6 @@
 import os, sys, json
 from jsonmerge import merge
 
-def cat_json(outfile, infiles):
-    file(outfile, "w")\
-        .write("[%s]" % (",".join([mangle(file(f).read()) for f in infiles])))
-
-def mangle(s):
-    return s.strip()[1:-1]
-
 def concatCommands(command_files, target_file):
     target_commands=[]
     for command_file in command_files:
