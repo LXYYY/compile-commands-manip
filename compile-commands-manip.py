@@ -2,15 +2,17 @@ import os, sys, json
 from jsonmerge import merge
 
 def concatCommands(command_files, target_file):
-    target_commands=[]
-    for command_file in command_files:
-        with open(command_file) as f:
-            commands=json.load(f)
-            target_commands=target_commands+commands
-
-    with open(target_file, 'w') as f:
-        for command in target_commands:
-            json.dump(command, f)
+    target_commands=''
+    with open(target_file, 'w') as ft:
+        for command_file in command_files:
+            with open(command_file) as f:
+                commands=f.read()
+                target_commands+=commands[2:len(commands)-2]
+                target_commands+=',\n'
+        
+        target_commands='[\n'+target_commands[:len(target_commands)-2]+'\n]'
+        ft.write(target_commands)
+        ft.close()
 
 
 def findAllCommandFiles(ws_dir):
